@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Task Manager • Accessible & Responsive</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="app-title">Task Manager</h1>
+        <p class="app-tag">Add, mark complete, and delete tasks — accessible and responsive</p>
+        <p class="app-hint" aria-hidden="true">Tip: press <kbd>N</kbd> or <kbd>/</kbd> to focus the input quickly</p>
+      </div>
+    </header>
+
+    <main class="container" id="main" role="main">
+      <section aria-labelledby="todo-heading" class="todo-section">
+        <h2 id="todo-heading">Your Tasks</h2>
+
+        <form id="add-task-form" class="task-form" aria-label="Add a task">
+          <label for="task-input" class="visually-hidden">Task description</label>
+          <input
+            id="task-input"
+            name="task"
+            class="task-input"
+            type="text"
+            placeholder="What needs to be done?"
+            required
+            aria-required="true"
+            autocomplete="off"
+          />
+          <button id="add-task-btn" class="btn primary" type="submit">Add Task</button>
+        </form>
+
+        <div class="task-list-wrapper">
+          <div id="task-count" class="task-count" aria-live="polite">0 tasks</div>
+
+          <ul id="task-list" class="task-list" aria-live="polite"></ul>
+        </div>
+
+        <div class="empty-state" id="empty-state" hidden>
+          <p>No tasks yet — add one above to get started.</p>
+        </div>
+
+        <noscript>
+          <div class="noscript-warning" role="status">
+            <p>JavaScript is disabled — adding, editing, and deleting require JavaScript to be enabled.</p>
+          </div>
+        </noscript>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2025 Task Manager. Built with accessibility in mind.</p>
+      </div>
+    </footer>
+
+    <div id="live-region" class="visually-hidden" aria-live="polite" aria-atomic="true"></div>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
