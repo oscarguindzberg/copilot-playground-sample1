@@ -40,6 +40,11 @@ body{
 .btn:focus{outline:3px solid rgba(124,58,237,0.18)}
 
 .task-list-wrapper{margin-top:1rem}
+.task-controls{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.6rem}
+.task-filters{display:flex;gap:0.5rem}
+.filter-btn{padding:0.45rem 0.6rem;font-size:0.9rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--muted);cursor:pointer}
+.filter-btn[aria-pressed="true"]{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:white}
+.filter-btn:focus{outline:3px solid rgba(124,58,237,0.18)}
 .task-count{color:var(--muted);font-size:0.95rem;margin-bottom:0.35rem}
 .task-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.5rem}
 
@@ -64,6 +69,12 @@ body{
   .task-form{flex-wrap:nowrap}
   .app-title{font-size:2rem}
   .todo-section{padding:1.25rem}
+}
+
+/* mobile adjustments */
+@media (max-width:699px){
+  .task-controls{flex-direction:column;align-items:stretch}
+  .task-filters{justify-content:flex-start}
 }
 
 /* Focus states for keyboard navigation */

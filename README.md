@@ -8,6 +8,7 @@ This is a simple, accessible task manager web app with the following features:
 - LocalStorage persistence
 - Keyboard shortcuts + accessible live updates
 - Responsive layout and modern styling
+ - Filtering: show All / Active / Completed tasks
 
 ## Files
 
@@ -31,10 +32,15 @@ python3 -m http.server 8000
 - Press `N` or `/` to focus the Add Task input quickly.
 - Use `Tab` and `Shift+Tab` to navigate interactive elements.
 - Press `Enter` or `Space` on a task's label to toggle completion (checkbox can also be used).
+ - Press `N` or `/` to focus the Add Task input quickly.
+ - Use `Tab` and `Shift+Tab` to navigate interactive elements. Use Enter/Space to activate buttons.
+ - The filter buttons (All / Active / Completed) are keyboard-focusable and support activation by keyboard.
 
 ## Notes
 
 - Tasks persist to `localStorage` using the key `task-manager:tasks:v1`.
+ - Tasks persist to `localStorage` using the key `task-manager:tasks:v1`.
+ - The selected filter persists using `task-manager:filter:v1`.
 - It's simple by design—feel free to expand features like editing tasks, sorting, filtering, or importing/exporting data.
 
 ## License

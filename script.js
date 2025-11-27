@@ -13,6 +13,8 @@
   const liveRegion = document.getElementById('live-region')
 
   let tasks = []
+  const FILTER_KEY = 'task-manager:filter:v1'
+  let currentFilter = 'all'
 
   // Utilities
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 9)
@@ -28,16 +30,34 @@
   // Render tasks list
   function render() {
     list.innerHTML = ''
-    if (!tasks || tasks.length === 0) {
+    const total = tasks.length
+    const activeCount = tasks.reduce((acc, t) => acc + (!t.completed ? 1 : 0), 0)
+    const completedCount = total - activeCount
+
+    const visible = tasks.filter((t) => {
+      if (currentFilter === 'all') return true
+      if (currentFilter === 'active') return !t.completed
+      if (currentFilter === 'completed') return t.completed
+      return true
+    })
+
+    if (!visible || visible.length === 0) {
       emptyState.hidden = false
-      countEl.textContent = '0 tasks'
+      if (total === 0) {
+        countEl.textContent = '0 tasks'
+        emptyState.querySelector('p').textContent = 'No tasks yet — add one above to get started.'
+      } else {
+        // tasks exist but none for this filter
+        countEl.textContent = `${visible.length} ${visible.length === 1 ? 'task' : 'tasks'} (${activeCount} open, ${completedCount} completed)`
+        emptyState.querySelector('p').textContent = 'No tasks in this filter.'
+      }
       return
     }
 
     emptyState.hidden = true
-    countEl.textContent = `${tasks.length} ${tasks.length === 1 ? 'task' : 'tasks'}`
+    countEl.textContent = `${visible.length} ${visible.length === 1 ? 'task' : 'tasks'} (${activeCount} open, ${completedCount} completed)`
 
-    tasks.forEach((task) => {
+    visible.forEach((task) => {
       const li = document.createElement('li')
       li.className = 'task-item'
       if (task.completed) li.classList.add('completed')
@@ -143,6 +163,25 @@
   // Initialize
   function init() {
     tasks = load() || []
+    currentFilter = localStorage.getItem(FILTER_KEY) || 'all'
+    // wire filter buttons
+    const btns = document.querySelectorAll('.filter-btn')
+    btns.forEach((b) => {
+      b.addEventListener('click', (e) => {
+        const which = e.currentTarget.dataset.filter
+        setFilter(which)
+      })
+    })
+    setFilter(currentFilter)
+  }
+
+  function setFilter(filter) {
+    currentFilter = filter || 'all'
+    localStorage.setItem(FILTER_KEY, currentFilter)
+    // update pressed state
+    const btns = document.querySelectorAll('.filter-btn')
+    btns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.filter === currentFilter))
+    announce(`Showing ${currentFilter === 'all' ? 'all tasks' : currentFilter === 'active' ? 'active tasks' : 'completed tasks'}`)
     render()
   }
 
