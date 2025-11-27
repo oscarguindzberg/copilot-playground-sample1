@@ -50,3 +50,6 @@ Open-source and free to use.
 
 ## Author
 Created by Oscar.
+
+## Acknowledgments
+Inspired by various task manager apps and accessibility best practices.
