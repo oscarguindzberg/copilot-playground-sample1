@@ -1,6 +1,6 @@
 # Task Manager (Accessible & Responsive)
 
-This is a simple, accessible task manager web app with the following features:
+This is a simple, accessible task manager web app with the following features (now using a light color palette):
 
 - Add tasks
 - Mark tasks complete
@@ -9,6 +9,7 @@ This is a simple, accessible task manager web app with the following features:
 - Keyboard shortcuts + accessible live updates
 - Responsive layout and modern styling
  - Filtering: show All / Active / Completed tasks
+ - Theme: Light (default). The UI uses a clean light color palette for improved readability in bright environments.
 
 ## Files
 
