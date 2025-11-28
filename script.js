@@ -95,6 +95,14 @@
       const actions = document.createElement('div')
       actions.className = 'task-actions'
 
+      const edit = document.createElement('button')
+      edit.className = 'edit-btn'
+      edit.type = 'button'
+      edit.textContent = 'Rename'
+      edit.title = `Rename ${task.text}`
+      edit.setAttribute('aria-label', `Rename task ${task.text}`)
+      edit.addEventListener('click', () => startEditTask(task.id))
+
       const del = document.createElement('button')
       del.className = 'delete-btn'
       del.type = 'button'
@@ -103,6 +111,7 @@
       del.setAttribute('aria-label', `Delete task ${task.text}`)
       del.addEventListener('click', () => deleteTask(task.id))
 
+      actions.appendChild(edit)
       actions.appendChild(del)
 
       li.appendChild(left)
@@ -130,6 +139,65 @@
     save()
     render()
     announce(`${t.text} ${t.completed ? 'completed' : 'marked as incomplete'}`)
+  }
+
+  // Start editing a task
+  function startEditTask(id) {
+    const li = list.querySelector(`li[data-id="${id}"]`)
+    if (!li) return
+    const t = tasks.find((x) => x.id === id)
+    if (!t) return
+    const label = li.querySelector('.task-label')
+    const left = li.querySelector('.task-left')
+    if (!label || !left) return
+
+    // Prevent multiple editors
+    if (left.querySelector('.edit-input')) return
+
+    const inputEdit = document.createElement('input')
+    inputEdit.type = 'text'
+    inputEdit.className = 'edit-input'
+    inputEdit.value = t.text
+    inputEdit.setAttribute('aria-label', `Rename task ${t.text}`)
+
+    // Replace label with input temporarily
+    left.replaceChild(inputEdit, label)
+    inputEdit.focus()
+    inputEdit.select()
+
+    const finish = (commit) => {
+      const newText = inputEdit.value.trim()
+      // restore label
+      label.textContent = commit && newText ? newText : t.text
+      left.replaceChild(label, inputEdit)
+      if (commit && newText && newText !== t.text) {
+        renameTask(id, newText)
+      }
+    }
+
+    inputEdit.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault()
+        finish(true)
+      } else if (e.key === 'Escape') {
+        e.preventDefault()
+        finish(false)
+      }
+    })
+    inputEdit.addEventListener('blur', () => finish(true))
+  }
+
+  // Rename and persist
+  function renameTask(id, newText) {
+    const t = tasks.find((x) => x.id === id)
+    if (!t) return
+    const trimmed = newText.trim()
+    if (!trimmed) return
+    const old = t.text
+    t.text = trimmed
+    save()
+    render()
+    announce(`Renamed task: ${old} to ${trimmed}`)
   }
 
   // Delete a task
