@@ -1,4 +1,10 @@
 // Task Manager script
+/**
+ * Task Manager Application - IIFE that encapsulates the task management functionality.
+ * Provides a complete task management system with CRUD operations, filtering,
+ * and accessibility features.
+ * @returns {void}
+ */
 (function () {
   'use strict'
 
@@ -17,9 +23,29 @@
   let currentFilter = 'all'
 
   // Utilities
+  /**
+   * Generates a unique identifier combining timestamp and random characters.
+   * @returns {string} A unique identifier string.
+   */
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 9)
+
+  /**
+   * Saves the current tasks array to localStorage.
+   * @returns {void}
+   */
   const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
+
+  /**
+   * Loads tasks from localStorage.
+   * @returns {Array<Object>} Array of task objects, or empty array if none exist.
+   */
   const load = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+
+  /**
+   * Announces a message to screen readers via a live region.
+   * @param {string} msg - The message to announce.
+   * @returns {void}
+   */
   const announce = (msg) => {
     if (!liveRegion) return
     liveRegion.textContent = ''
@@ -28,6 +54,12 @@
   }
 
   // Render tasks list
+  /**
+   * Renders the task list to the DOM based on current filter.
+   * Updates the task count, handles empty states, and creates
+   * task items with checkboxes and action buttons.
+   * @returns {void}
+   */
   function render() {
     list.innerHTML = ''
     const total = tasks.length
@@ -121,6 +153,12 @@
   }
 
   // Add a new task
+  /**
+   * Adds a new task to the task list.
+   * Creates a task object with unique ID, trims the text, and persists to storage.
+   * @param {string} text - The text content of the task to add.
+   * @returns {void}
+   */
   function addTask(text) {
     const trimmed = text.trim()
     if (!trimmed) return
@@ -132,6 +170,11 @@
   }
 
   // Toggle a task
+  /**
+   * Toggles the completed status of a task.
+   * @param {string} id - The unique identifier of the task to toggle.
+   * @returns {void}
+   */
   function toggleTask(id) {
     const t = tasks.find((x) => x.id === id)
     if (!t) return
@@ -142,6 +185,12 @@
   }
 
   // Start editing a task
+  /**
+   * Starts inline editing mode for a task.
+   * Replaces the task label with an input field for renaming.
+   * @param {string} id - The unique identifier of the task to edit.
+   * @returns {void}
+   */
   function startEditTask(id) {
     const li = list.querySelector(`li[data-id="${id}"]`)
     if (!li) return
@@ -188,6 +237,12 @@
   }
 
   // Rename and persist
+  /**
+   * Renames a task and persists the change to storage.
+   * @param {string} id - The unique identifier of the task to rename.
+   * @param {string} newText - The new text for the task.
+   * @returns {void}
+   */
   function renameTask(id, newText) {
     const t = tasks.find((x) => x.id === id)
     if (!t) return
@@ -201,6 +256,11 @@
   }
 
   // Delete a task
+  /**
+   * Deletes a task from the task list.
+   * @param {string} id - The unique identifier of the task to delete.
+   * @returns {void}
+   */
   function deleteTask(id) {
     const i = tasks.findIndex((x) => x.id === id)
     if (i === -1) return
@@ -229,6 +289,11 @@
   })
 
   // Initialize
+  /**
+   * Initializes the task manager application.
+   * Loads tasks from storage, sets up filter buttons, and applies the saved filter.
+   * @returns {void}
+   */
   function init() {
     tasks = load() || []
     currentFilter = localStorage.getItem(FILTER_KEY) || 'all'
@@ -243,6 +308,12 @@
     setFilter(currentFilter)
   }
 
+  /**
+   * Sets the current filter and updates the UI.
+   * Persists the filter choice to localStorage and re-renders the task list.
+   * @param {string} filter - The filter to apply ('all', 'active', or 'completed').
+   * @returns {void}
+   */
   function setFilter(filter) {
     currentFilter = filter || 'all'
     localStorage.setItem(FILTER_KEY, currentFilter)
