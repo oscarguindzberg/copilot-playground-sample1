@@ -95,8 +95,8 @@ button:focus, .task-input:focus, .task-label:focus{outline-offset:2px}
 .edit-input{flex:1 1 auto;padding:0.3rem 0.5rem;border-radius:6px;border:1px solid rgba(2,6,23,0.12);background:var(--surface);color:var(--text)}
 .edit-input:focus{outline:3px solid rgba(245,158,11,0.18)}
 
-/* description input narrower on wide screens */
-.task-input-desc{flex:1 1 200px}
+/* description textarea styles */
+.task-input-desc{flex:1 1 200px;resize:vertical;font-family:inherit}
 
 /* footer */
 .site-footer{margin-top:1.5rem;padding:2rem 0 3rem;color:var(--muted);font-size:0.9rem}
