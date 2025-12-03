@@ -253,5 +253,7 @@
     render()
   }
 
+  //TODO add sorting
+
   init()
 })()
