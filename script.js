@@ -15,6 +15,7 @@
   let tasks = []
   const FILTER_KEY = 'task-manager:filter:v1'
   const SORT_KEY = 'task-manager:sort:v1'
+  const SORT_LABELS = { newest: 'newest first', oldest: 'oldest first', alphabetical: 'alphabetically' }
   let currentFilter = 'all'
   let currentSort = 'newest'
 
@@ -46,9 +47,9 @@
     // Sort tasks based on current sort preference
     visible.sort((a, b) => {
       if (currentSort === 'newest') {
-        return (b.createdAt || 0) - (a.createdAt || 0)
+        return (b.createdAt || Date.now()) - (a.createdAt || Date.now())
       } else if (currentSort === 'oldest') {
-        return (a.createdAt || 0) - (b.createdAt || 0)
+        return (a.createdAt || Date.now()) - (b.createdAt || Date.now())
       } else if (currentSort === 'alphabetical') {
         return a.text.toLowerCase().localeCompare(b.text.toLowerCase())
       }
@@ -283,8 +284,7 @@
     // update pressed state for sort buttons
     const sortBtns = document.querySelectorAll('.sort-btn')
     sortBtns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.sort === currentSort))
-    const sortLabels = { newest: 'newest first', oldest: 'oldest first', alphabetical: 'alphabetically' }
-    announce(`Sorting tasks ${sortLabels[currentSort] || currentSort}`)
+    announce(`Sorting tasks ${SORT_LABELS[currentSort] || currentSort}`)
     render()
   }
 
