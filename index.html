@@ -20,7 +20,7 @@
         <h2 id="todo-heading">Your Tasks</h2>
 
         <form id="add-task-form" class="task-form" aria-label="Add a task">
-          <label for="task-input" class="visually-hidden">Task description</label>
+          <label for="task-input" class="visually-hidden">Task title</label>
           <input
             id="task-input"
             name="task"
@@ -29,6 +29,15 @@
             placeholder="What needs to be done?"
             required
             aria-required="true"
+            autocomplete="off"
+          />
+          <label for="task-desc-input" class="visually-hidden">Task details</label>
+          <input
+            id="task-desc-input"
+            name="description"
+            class="task-input task-input-desc"
+            type="text"
+            placeholder="Optional details (e.g., notes, context)"
             autocomplete="off"
           />
           <button id="add-task-btn" class="btn primary" type="submit">Add Task</button>
