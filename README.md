@@ -1,55 +1,55 @@
-# Gestor de Tareas (Accesible y Responsivo)
+# Task Manager (Accessible & Responsive)
 
-Este es un gestor de tareas web simple y accesible con las siguientes características (ahora usando una paleta de colores claros):
+This is a simple, accessible task manager web app with the following features (now using a light color palette):
 
-- Añadir tareas
-- Marcar tareas como completadas
-- Eliminar tareas
-- Persistencia en LocalStorage
-- Atajos de teclado + actualizaciones en vivo accesibles
-- Diseño responsivo y estilos modernos
- - Filtrado: mostrar Todas / Activas / Completadas
- - Tema: Claro (por defecto). La interfaz usa una paleta de colores claros para mejorar la legibilidad en ambientes luminosos.
+- Add tasks
+- Mark tasks complete
+- Delete tasks
+- LocalStorage persistence
+- Keyboard shortcuts + accessible live updates
+- Responsive layout and modern styling
+ - Filtering: show All / Active / Completed tasks
+ - Theme: Light (default). The UI uses a clean light color palette for improved readability in bright environments.
 
-## Archivos
+## Files
 
-- `index.html` — marcado semántico y estructura
-- `styles.css` — estilos CSS modernos y responsivos
-- `script.js` — lógica de la aplicación, persistencia y comportamientos de accesibilidad
+- `index.html` — semantic markup and structure
+- `styles.css` — modern, responsive CSS styles
+- `script.js` — app logic, persistence, and accessibility behaviors
 
-## Ejecutar localmente
+## Run locally
 
-Abre `index.html` en un navegador. No se requiere servidor. Para desarrollo, también puedes servirlo con un servidor estático simple; por ejemplo, usando Python:
+Open `index.html` in a browser. No server required. For development, you can also serve it with a simple static server; for example, using Python:
 
 ```bash
 python3 -m http.server 8000
-# luego abre http://localhost:8000 en tu navegador
+# then open http://localhost:8000 in your browser
 ```
 
-## Accesibilidad y atajos de teclado
+## Accessibility & Keyboard shortcuts
 
-- Se incluyen etiquetas apropiadas y estados de enfoque.
-- Una región `aria-live` anuncia los cambios (tarea añadida, completada, eliminada).
-- Presiona `N` o `/` para enfocar rápidamente el campo de entrada de nueva tarea.
-- Usa `Tab` y `Shift+Tab` para navegar entre elementos interactivos.
-- Presiona `Enter` o `Espacio` en la etiqueta de una tarea para alternar su estado (también se puede usar la casilla de verificación).
- - Presiona `N` o `/` para enfocar rápidamente el campo de entrada de nueva tarea.
- - Usa `Tab` y `Shift+Tab` para navegar entre elementos interactivos. Usa Enter/Espacio para activar botones.
- - Los botones de filtro (Todas / Activas / Completadas) son navegables con teclado y soportan activación por teclado.
+- Proper labels and focus states are included.
+- A `aria-live` region announces changes (task added, completed, deleted).
+- Press `N` or `/` to focus the Add Task input quickly.
+- Use `Tab` and `Shift+Tab` to navigate interactive elements.
+- Press `Enter` or `Space` on a task's label to toggle completion (checkbox can also be used).
+ - Press `N` or `/` to focus the Add Task input quickly.
+ - Use `Tab` and `Shift+Tab` to navigate interactive elements. Use Enter/Space to activate buttons.
+ - The filter buttons (All / Active / Completed) are keyboard-focusable and support activation by keyboard.
 
-## Notas
+## Notes
 
-- Las tareas se persisten en `localStorage` usando la clave `task-manager:tasks:v1`.
- - Las tareas se persisten en `localStorage` usando la clave `task-manager:tasks:v1`.
- - El filtro seleccionado se persiste usando `task-manager:filter:v1`.
-- Es simple por diseño—siéntete libre de expandir características como editar tareas, ordenar, filtrar o importar/exportar datos.
+- Tasks persist to `localStorage` using the key `task-manager:tasks:v1`.
+ - Tasks persist to `localStorage` using the key `task-manager:tasks:v1`.
+ - The selected filter persists using `task-manager:filter:v1`.
+- It's simple by design—feel free to expand features like editing tasks, sorting, filtering, or importing/exporting data.
 
-## Licencia
+## License
 
-Código abierto y de uso libre.
+Open-source and free to use.
 
-## Autor
-Creado por Oscar.
+## Author
+Created by Oscar.
 
-## Agradecimientos
-Inspirado en varias aplicaciones de gestión de tareas y mejores prácticas de accesibilidad.
+## Acknowledgments
+Inspired by various task manager apps and accessibility best practices.
