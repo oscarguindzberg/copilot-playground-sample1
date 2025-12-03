@@ -26,6 +26,9 @@
     // small timeout helps some AT announce changes
     setTimeout(() => (liveRegion.textContent = msg), 10)
   }
+  const formatTaskCount = (visible, activeCount, completedCount) => {
+    return `${visible} ${visible === 1 ? 'tarea' : 'tareas'} (${activeCount} ${activeCount === 1 ? 'pendiente' : 'pendientes'}, ${completedCount} ${completedCount === 1 ? 'completada' : 'completadas'})`
+  }
 
   // Render tasks list
   function render() {
@@ -48,14 +51,14 @@
         emptyState.querySelector('p').textContent = 'Aún no hay tareas — añade una arriba para comenzar.'
       } else {
         // tasks exist but none for this filter
-        countEl.textContent = `${visible.length} ${visible.length === 1 ? 'tarea' : 'tareas'} (${activeCount} ${activeCount === 1 ? 'pendiente' : 'pendientes'}, ${completedCount} ${completedCount === 1 ? 'completada' : 'completadas'})`
+        countEl.textContent = formatTaskCount(visible.length, activeCount, completedCount)
         emptyState.querySelector('p').textContent = 'No hay tareas en este filtro.'
       }
       return
     }
 
     emptyState.hidden = true
-    countEl.textContent = `${visible.length} ${visible.length === 1 ? 'tarea' : 'tareas'} (${activeCount} ${activeCount === 1 ? 'pendiente' : 'pendientes'}, ${completedCount} ${completedCount === 1 ? 'completada' : 'completadas'})`
+    countEl.textContent = formatTaskCount(visible.length, activeCount, completedCount)
 
     visible.forEach((task) => {
       const li = document.createElement('li')
