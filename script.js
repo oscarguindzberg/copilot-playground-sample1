@@ -11,6 +11,7 @@
   const countEl = document.getElementById('task-count')
   const emptyState = document.getElementById('empty-state')
   const liveRegion = document.getElementById('live-region')
+  const descInput = document.getElementById('task-desc-input')
 
   let tasks = []
   const FILTER_KEY = 'task-manager:filter:v1'
@@ -92,6 +93,13 @@
       left.appendChild(checkboxLabel)
       left.appendChild(label)
 
+      if (task.description) {
+        const desc = document.createElement('span')
+        desc.className = 'task-desc'
+        desc.textContent = task.description
+        left.appendChild(desc)
+      }
+
       const actions = document.createElement('div')
       actions.className = 'task-actions'
 
@@ -121,10 +129,10 @@
   }
 
   // Add a new task
-  function addTask(text) {
+  function addTask(text, description) {
     const trimmed = text.trim()
     if (!trimmed) return
-    const task = { id: uid(), text: trimmed, completed: false, createdAt: Date.now() }
+    const task = { id: uid(), text: trimmed, description: (description || '').trim(), completed: false, createdAt: Date.now() }
     tasks.unshift(task)
     save()
     render()
@@ -214,8 +222,9 @@
   form.addEventListener('submit', (e) => {
     e.preventDefault()
     if (!input.value.trim()) return
-    addTask(input.value)
+    addTask(input.value, descInput ? descInput.value : '')
     input.value = ''
+    if (descInput) descInput.value = ''
     input.focus()
   })
 
@@ -256,4 +265,27 @@
   //TODO add sorting
 
   init()
+
+  const api = {
+    addTask,
+    toggleTask,
+    renameTask,
+    deleteTask,
+    setFilter,
+    getTasks: () => tasks.map((t) => ({ ...t })),
+    getFilter: () => currentFilter,
+    resetState: (seed = []) => {
+      tasks = seed.map((t) => ({ ...t }))
+      save()
+      render()
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.taskApp = api
+  }
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api
+  }
 })()
