@@ -265,4 +265,27 @@
   //TODO add sorting
 
   init()
+
+  const api = {
+    addTask,
+    toggleTask,
+    renameTask,
+    deleteTask,
+    setFilter,
+    getTasks: () => tasks.map((t) => ({ ...t })),
+    getFilter: () => currentFilter,
+    resetState: (seed = []) => {
+      tasks = seed.map((t) => ({ ...t }))
+      save()
+      render()
+    }
+  }
+
+  if (typeof window !== 'undefined') {
+    window.taskApp = api
+  }
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api
+  }
 })()
