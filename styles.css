@@ -83,6 +83,7 @@ body{
 @media (max-width:699px){
   .task-controls{flex-direction:column;align-items:stretch}
   .task-filters{justify-content:flex-start}
+  .task-sort-controls{flex-wrap:wrap}
 }
 
 /* Focus states for keyboard navigation */

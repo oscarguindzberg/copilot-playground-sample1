@@ -254,7 +254,7 @@
     tasks = load() || []
     currentFilter = localStorage.getItem(FILTER_KEY) || 'all'
     currentSort = localStorage.getItem(SORT_KEY) || 'newest'
-    
+
     // wire filter buttons
     const btns = document.querySelectorAll('.filter-btn')
     btns.forEach((b) => {
@@ -264,7 +264,7 @@
       })
     })
     setFilter(currentFilter)
-    
+
     // wire sort select
     const sortSelect = document.getElementById('sort-select')
     if (sortSelect) {
