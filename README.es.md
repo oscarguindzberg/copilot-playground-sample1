@@ -31,17 +31,14 @@ python3 -m http.server 8000
 - Se incluyen etiquetas apropiadas y estados de foco.
 - Una región `aria-live` anuncia cambios (tarea agregada, completada, eliminada).
 - Presiona `N` o `/` para enfocar rápidamente el campo de entrada de Agregar Tarea.
-- Usa `Tab` y `Shift+Tab` para navegar entre elementos interactivos.
+- Usa `Tab` y `Shift+Tab` para navegar entre elementos interactivos. Usa Enter/Espacio para activar botones.
 - Presiona `Enter` o `Espacio` en la etiqueta de una tarea para alternar su completado (también se puede usar la casilla de verificación).
- - Presiona `N` o `/` para enfocar rápidamente el campo de entrada de Agregar Tarea.
- - Usa `Tab` y `Shift+Tab` para navegar entre elementos interactivos. Usa Enter/Espacio para activar botones.
- - Los botones de filtro (Todas / Activas / Completadas) son accesibles con el teclado y se pueden activar mediante teclado.
+- Los botones de filtro (Todas / Activas / Completadas) son accesibles con el teclado y se pueden activar mediante teclado.
 
 ## Notas
 
 - Las tareas persisten en `localStorage` usando la clave `task-manager:tasks:v1`.
- - Las tareas persisten en `localStorage` usando la clave `task-manager:tasks:v1`.
- - El filtro seleccionado persiste usando `task-manager:filter:v1`.
+- El filtro seleccionado persiste usando `task-manager:filter:v1`.
 - Es simple por diseño — siéntete libre de expandir características como editar tareas, ordenar, filtrar o importar/exportar datos.
 
 ## Licencia
