@@ -43,6 +43,15 @@
               <button type="button" class="btn filter-btn" data-filter="completed" aria-pressed="false">Completed</button>
             </div>
           </div>
+          <div class="task-sort-controls">
+            <label for="sort-select" class="sort-label">Sort by:</label>
+            <select id="sort-select" class="sort-select" aria-label="Sort tasks by">
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="alphabetical">A-Z</option>
+              <option value="reverse-alphabetical">Z-A</option>
+            </select>
+          </div>
 
           <ul id="task-list" class="task-list" aria-live="polite"></ul>
         </div>

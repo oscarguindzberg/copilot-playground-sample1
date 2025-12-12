@@ -8,8 +8,9 @@ This is a simple, accessible task manager web app with the following features (n
 - LocalStorage persistence
 - Keyboard shortcuts + accessible live updates
 - Responsive layout and modern styling
- - Filtering: show All / Active / Completed tasks
- - Theme: Light (default). The UI uses a clean light color palette for improved readability in bright environments.
+- Filtering: show All / Active / Completed tasks
+- Sorting: sort by newest, oldest, alphabetical (A-Z), or reverse alphabetical (Z-A)
+- Theme: Light (default). The UI uses a clean light color palette for improved readability in bright environments.
 
 ## Files
 
@@ -40,9 +41,9 @@ python3 -m http.server 8000
 ## Notes
 
 - Tasks persist to `localStorage` using the key `task-manager:tasks:v1`.
- - Tasks persist to `localStorage` using the key `task-manager:tasks:v1`.
- - The selected filter persists using `task-manager:filter:v1`.
-- It's simple by design—feel free to expand features like editing tasks, sorting, filtering, or importing/exporting data.
+- The selected filter persists using `task-manager:filter:v1`.
+- The selected sort order persists using `task-manager:sort:v1`.
+- It's simple by design—feel free to expand features like editing tasks, importing/exporting data, or adding due dates.
 
 ## License
 

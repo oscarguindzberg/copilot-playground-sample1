@@ -3,6 +3,8 @@
   'use strict'
 
   const STORAGE_KEY = 'task-manager:tasks:v1'
+  const FILTER_KEY = 'task-manager:filter:v1'
+  const SORT_KEY = 'task-manager:sort:v1'
 
   // DOM elements
   const form = document.getElementById('add-task-form')
@@ -13,8 +15,8 @@
   const liveRegion = document.getElementById('live-region')
 
   let tasks = []
-  const FILTER_KEY = 'task-manager:filter:v1'
   let currentFilter = 'all'
+  let currentSort = 'newest'
 
   // Utilities
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 9)
@@ -27,6 +29,23 @@
     setTimeout(() => (liveRegion.textContent = msg), 10)
   }
 
+  // Sort tasks based on current sort option
+  function sortTasks(tasksToSort) {
+    const sorted = [...tasksToSort]
+    switch (currentSort) {
+      case 'newest':
+        return sorted.sort((a, b) => b.createdAt - a.createdAt)
+      case 'oldest':
+        return sorted.sort((a, b) => a.createdAt - b.createdAt)
+      case 'alphabetical':
+        return sorted.sort((a, b) => a.text.localeCompare(b.text))
+      case 'reverse-alphabetical':
+        return sorted.sort((a, b) => b.text.localeCompare(a.text))
+      default:
+        return sorted
+    }
+  }
+
   // Render tasks list
   function render() {
     list.innerHTML = ''
@@ -34,12 +53,14 @@
     const activeCount = tasks.reduce((acc, t) => acc + (!t.completed ? 1 : 0), 0)
     const completedCount = total - activeCount
 
-    const visible = tasks.filter((t) => {
+    const filtered = tasks.filter((t) => {
       if (currentFilter === 'all') return true
       if (currentFilter === 'active') return !t.completed
       if (currentFilter === 'completed') return t.completed
       return true
     })
+
+    const visible = sortTasks(filtered)
 
     if (!visible || visible.length === 0) {
       emptyState.hidden = false
@@ -232,6 +253,8 @@
   function init() {
     tasks = load() || []
     currentFilter = localStorage.getItem(FILTER_KEY) || 'all'
+    currentSort = localStorage.getItem(SORT_KEY) || 'newest'
+    
     // wire filter buttons
     const btns = document.querySelectorAll('.filter-btn')
     btns.forEach((b) => {
@@ -241,6 +264,15 @@
       })
     })
     setFilter(currentFilter)
+    
+    // wire sort select
+    const sortSelect = document.getElementById('sort-select')
+    if (sortSelect) {
+      sortSelect.value = currentSort
+      sortSelect.addEventListener('change', (e) => {
+        setSort(e.target.value)
+      })
+    }
   }
 
   function setFilter(filter) {
@@ -253,7 +285,18 @@
     render()
   }
 
-  //TODO add sorting
+  function setSort(sort) {
+    currentSort = sort || 'newest'
+    localStorage.setItem(SORT_KEY, currentSort)
+    const sortNames = {
+      'newest': 'newest first',
+      'oldest': 'oldest first',
+      'alphabetical': 'A to Z',
+      'reverse-alphabetical': 'Z to A'
+    }
+    announce(`Sorting by ${sortNames[currentSort] || currentSort}`)
+    render()
+  }
 
   init()
 })()
