@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Testing
+coverage/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
