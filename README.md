@@ -53,3 +53,6 @@ Created by Oscar.
 
 ## Acknowledgments
 Inspired by various task manager apps and accessibility best practices.
+
+
+<span style="color:red">Texto en rojo</span>
