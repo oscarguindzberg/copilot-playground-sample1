@@ -202,9 +202,9 @@
 
   // Delete a task
   function deleteTask(id) {
-    const i = tasks.findIndex((x) => x.id === id)
-    if (i === -1) return
-    const task = tasks.splice(i, 1)[0]
+    const taskIndex = tasks.findIndex((x) => x.id === id)
+    if (taskIndex === -1) return
+    const task = tasks.splice(taskIndex, 1)[0]
     save()
     render()
     announce(`Deleted task: ${task.text}`)
