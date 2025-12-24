@@ -1,46 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Task Manager • Accessible & Responsive</title>
+    <title>Gestor de Tareas • Accesible y Responsivo</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
       <div class="container">
-        <h1 class="app-title">Task Manager</h1>
-        <p class="app-tag">Add, mark complete, and delete tasks — accessible and responsive</p>
-        <p class="app-hint" aria-hidden="true">Tip: press <kbd>N</kbd> or <kbd>/</kbd> to focus the input quickly</p>
+        <h1 class="app-title">Gestor de Tareas</h1>
+        <p class="app-tag">Añade, marca como completadas y elimina tareas — accesible y responsivo</p>
+        <p class="app-hint" aria-hidden="true">Consejo: presiona <kbd>N</kbd> o <kbd>/</kbd> para enfocar el campo de entrada rápidamente</p>
       </div>
     </header>
 
     <main class="container" id="main" role="main">
       <section aria-labelledby="todo-heading" class="todo-section">
-        <h2 id="todo-heading">Your Tasks</h2>
+        <h2 id="todo-heading">Tus Tareas</h2>
 
-        <form id="add-task-form" class="task-form" aria-label="Add a task">
-          <label for="task-input" class="visually-hidden">Task description</label>
+        <form id="add-task-form" class="task-form" aria-label="Añadir una tarea">
+          <label for="task-input" class="visually-hidden">Descripción de la tarea</label>
           <input
             id="task-input"
             name="task"
             class="task-input"
             type="text"
-            placeholder="What needs to be done?"
+            placeholder="¿Qué necesitas hacer?"
             required
             aria-required="true"
             autocomplete="off"
           />
-          <button id="add-task-btn" class="btn primary" type="submit">Add Task</button>
+          <button id="add-task-btn" class="btn primary" type="submit">Añadir Tarea</button>
         </form>
 
         <div class="task-list-wrapper">
           <div class="task-controls">
-            <div id="task-count" class="task-count" aria-live="polite">0 tasks</div>
-            <div class="task-filters" role="toolbar" aria-label="Filter tasks">
-              <button type="button" class="btn filter-btn" data-filter="all" aria-pressed="true">All</button>
-              <button type="button" class="btn filter-btn" data-filter="active" aria-pressed="false">Active</button>
-              <button type="button" class="btn filter-btn" data-filter="completed" aria-pressed="false">Completed</button>
+            <div id="task-count" class="task-count" aria-live="polite">0 tareas</div>
+            <div class="task-filters" role="toolbar" aria-label="Filtrar tareas">
+              <button type="button" class="btn filter-btn" data-filter="all" aria-pressed="true">Todas</button>
+              <button type="button" class="btn filter-btn" data-filter="active" aria-pressed="false">Activas</button>
+              <button type="button" class="btn filter-btn" data-filter="completed" aria-pressed="false">Completadas</button>
             </div>
           </div>
 
@@ -48,12 +48,12 @@
         </div>
 
         <div class="empty-state" id="empty-state" hidden>
-          <p>No tasks yet — add one above to get started.</p>
+          <p>Aún no hay tareas — añade una arriba para comenzar.</p>
         </div>
 
         <noscript>
           <div class="noscript-warning" role="status">
-            <p>JavaScript is disabled — adding, editing, and deleting require JavaScript to be enabled.</p>
+            <p>JavaScript está deshabilitado — añadir, editar y eliminar requieren que JavaScript esté habilitado.</p>
           </div>
         </noscript>
       </section>
@@ -61,7 +61,7 @@
 
     <footer class="site-footer">
       <div class="container">
-        <p>&copy; 2025 Task Manager. Built with accessibility in mind.</p>
+        <p>&copy; 2025 Gestor de Tareas. Construido con la accesibilidad en mente.</p>
       </div>
     </footer>
 

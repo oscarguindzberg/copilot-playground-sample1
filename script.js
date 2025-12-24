@@ -26,6 +26,9 @@
     // small timeout helps some AT announce changes
     setTimeout(() => (liveRegion.textContent = msg), 10)
   }
+  const formatTaskCount = (visible, activeCount, completedCount) => {
+    return `${visible} ${visible === 1 ? 'tarea' : 'tareas'} (${activeCount} ${activeCount === 1 ? 'pendiente' : 'pendientes'}, ${completedCount} ${completedCount === 1 ? 'completada' : 'completadas'})`
+  }
 
   // Render tasks list
   function render() {
@@ -44,18 +47,18 @@
     if (!visible || visible.length === 0) {
       emptyState.hidden = false
       if (total === 0) {
-        countEl.textContent = '0 tasks'
-        emptyState.querySelector('p').textContent = 'No tasks yet — add one above to get started.'
+        countEl.textContent = '0 tareas'
+        emptyState.querySelector('p').textContent = 'Aún no hay tareas — añade una arriba para comenzar.'
       } else {
         // tasks exist but none for this filter
-        countEl.textContent = `${visible.length} ${visible.length === 1 ? 'task' : 'tasks'} (${activeCount} open, ${completedCount} completed)`
-        emptyState.querySelector('p').textContent = 'No tasks in this filter.'
+        countEl.textContent = formatTaskCount(visible.length, activeCount, completedCount)
+        emptyState.querySelector('p').textContent = 'No hay tareas en este filtro.'
       }
       return
     }
 
     emptyState.hidden = true
-    countEl.textContent = `${visible.length} ${visible.length === 1 ? 'task' : 'tasks'} (${activeCount} open, ${completedCount} completed)`
+    countEl.textContent = formatTaskCount(visible.length, activeCount, completedCount)
 
     visible.forEach((task) => {
       const li = document.createElement('li')
@@ -73,7 +76,7 @@
       checkbox.type = 'checkbox'
       checkbox.checked = !!task.completed
       checkbox.id = `chk-${task.id}`
-      checkbox.setAttribute('aria-label', `Mark ${task.text} as completed`)
+      checkbox.setAttribute('aria-label', `Marcar ${task.text} como completada`)
       checkbox.addEventListener('change', () => toggleTask(task.id))
       checkboxLabel.appendChild(checkbox)
 
@@ -98,17 +101,17 @@
       const edit = document.createElement('button')
       edit.className = 'edit-btn'
       edit.type = 'button'
-      edit.textContent = 'Rename'
-      edit.title = `Rename ${task.text}`
-      edit.setAttribute('aria-label', `Rename task ${task.text}`)
+      edit.textContent = 'Renombrar'
+      edit.title = `Renombrar ${task.text}`
+      edit.setAttribute('aria-label', `Renombrar tarea ${task.text}`)
       edit.addEventListener('click', () => startEditTask(task.id))
 
       const del = document.createElement('button')
       del.className = 'delete-btn'
       del.type = 'button'
-      del.textContent = 'Delete'
-      del.title = `Delete ${task.text}`
-      del.setAttribute('aria-label', `Delete task ${task.text}`)
+      del.textContent = 'Eliminar'
+      del.title = `Eliminar ${task.text}`
+      del.setAttribute('aria-label', `Eliminar tarea ${task.text}`)
       del.addEventListener('click', () => deleteTask(task.id))
 
       actions.appendChild(edit)
@@ -128,7 +131,7 @@
     tasks.unshift(task)
     save()
     render()
-    announce(`Added task: ${trimmed}`)
+    announce(`Tarea añadida: ${trimmed}`)
   }
 
   // Toggle a task
@@ -138,7 +141,7 @@
     t.completed = !t.completed
     save()
     render()
-    announce(`${t.text} ${t.completed ? 'completed' : 'marked as incomplete'}`)
+    announce(`${t.text} ${t.completed ? 'completada' : 'marcada como incompleta'}`)
   }
 
   // Start editing a task
@@ -158,7 +161,7 @@
     inputEdit.type = 'text'
     inputEdit.className = 'edit-input'
     inputEdit.value = t.text
-    inputEdit.setAttribute('aria-label', `Rename task ${t.text}`)
+    inputEdit.setAttribute('aria-label', `Renombrar tarea ${t.text}`)
 
     // Replace label with input temporarily
     left.replaceChild(inputEdit, label)
@@ -197,7 +200,7 @@
     t.text = trimmed
     save()
     render()
-    announce(`Renamed task: ${old} to ${trimmed}`)
+    announce(`Tarea renombrada: ${old} a ${trimmed}`)
   }
 
   // Delete a task
@@ -207,7 +210,7 @@
     const task = tasks.splice(taskIndex, 1)[0]
     save()
     render()
-    announce(`Deleted task: ${task.text}`)
+    announce(`Tarea eliminada: ${task.text}`)
   }
 
   // Form submit
@@ -249,7 +252,7 @@
     // update pressed state
     const btns = document.querySelectorAll('.filter-btn')
     btns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.filter === currentFilter))
-    announce(`Showing ${currentFilter === 'all' ? 'all tasks' : currentFilter === 'active' ? 'active tasks' : 'completed tasks'}`)
+    announce(`Mostrando ${currentFilter === 'all' ? 'todas las tareas' : currentFilter === 'active' ? 'tareas activas' : 'tareas completadas'}`)
     render()
   }
 
