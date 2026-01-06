@@ -3,8 +3,8 @@
   --card: #ffffff; /* card background */
   --text: #0f1724; /* primary text */
   --muted: #6b7280; /* muted text */
-  --accent: #f59e0b; /* amber / yellow */
-  --accent-2: #fbbf24; /* light yellow */
+  --accent: var(--success); /* green */
+  --accent-2: #27c08d; /* lighter green */
   --success: #10b981; /* green */
   --danger: #ef4444; /* red */
   --surface: #ffffff;
