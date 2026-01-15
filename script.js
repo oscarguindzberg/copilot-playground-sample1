@@ -20,6 +20,8 @@
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 9)
   const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
   const load = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+  // Escape special characters for CSS selector to prevent CSS injection
+  const escapeCSS = (str) => CSS.escape(str)
   const announce = (msg) => {
     if (!liveRegion) return
     liveRegion.textContent = ''
@@ -29,7 +31,7 @@
 
   // Render tasks list
   function render() {
-    list.innerHTML = ''
+    list.replaceChildren()
     const total = tasks.length
     const activeCount = tasks.reduce((acc, t) => acc + (!t.completed ? 1 : 0), 0)
     const completedCount = total - activeCount
@@ -143,7 +145,7 @@
 
   // Start editing a task
   function startEditTask(id) {
-    const li = list.querySelector(`li[data-id="${id}"]`)
+    const li = list.querySelector(`li[data-id="${escapeCSS(id)}"]`)
     if (!li) return
     const t = tasks.find((x) => x.id === id)
     if (!t) return
