@@ -14,7 +14,10 @@
 
   let tasks = []
   const FILTER_KEY = 'task-manager:filter:v1'
+  const SORT_KEY = 'task-manager:sort:v1'
+  const SORT_LABELS = { newest: 'newest first', oldest: 'oldest first', alphabetical: 'alphabetically' }
   let currentFilter = 'all'
+  let currentSort = 'newest'
 
   // Utilities
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 9)
@@ -39,6 +42,18 @@
       if (currentFilter === 'active') return !t.completed
       if (currentFilter === 'completed') return t.completed
       return true
+    })
+
+    // Sort tasks based on current sort preference
+    visible.sort((a, b) => {
+      if (currentSort === 'newest') {
+        return (b.createdAt || Date.now()) - (a.createdAt || Date.now())
+      } else if (currentSort === 'oldest') {
+        return (a.createdAt || Date.now()) - (b.createdAt || Date.now())
+      } else if (currentSort === 'alphabetical') {
+        return a.text.toLowerCase().localeCompare(b.text.toLowerCase())
+      }
+      return 0
     })
 
     if (!visible || visible.length === 0) {
@@ -232,6 +247,7 @@
   function init() {
     tasks = load() || []
     currentFilter = localStorage.getItem(FILTER_KEY) || 'all'
+    currentSort = localStorage.getItem(SORT_KEY) || 'newest'
     // wire filter buttons
     const btns = document.querySelectorAll('.filter-btn')
     btns.forEach((b) => {
@@ -240,7 +256,16 @@
         setFilter(which)
       })
     })
+    // wire sort buttons
+    const sortBtns = document.querySelectorAll('.sort-btn')
+    sortBtns.forEach((b) => {
+      b.addEventListener('click', (e) => {
+        const which = e.currentTarget.dataset.sort
+        setSort(which)
+      })
+    })
     setFilter(currentFilter)
+    setSort(currentSort)
   }
 
   function setFilter(filter) {
@@ -253,7 +278,15 @@
     render()
   }
 
-  //TODO add sorting
+  function setSort(sort) {
+    currentSort = sort || 'newest'
+    localStorage.setItem(SORT_KEY, currentSort)
+    // update pressed state for sort buttons
+    const sortBtns = document.querySelectorAll('.sort-btn')
+    sortBtns.forEach((b) => b.setAttribute('aria-pressed', b.dataset.sort === currentSort))
+    announce(`Sorting tasks ${SORT_LABELS[currentSort] || currentSort}`)
+    render()
+  }
 
   init()
 })()
