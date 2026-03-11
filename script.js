@@ -20,6 +20,11 @@
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 9)
   const save = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks))
   const load = () => JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+  const compareTasks = (a, b) => {
+    if (a.completed !== b.completed) return a.completed ? 1 : -1
+    return (b.createdAt || 0) - (a.createdAt || 0)
+  }
+  const sortTasks = () => tasks.sort(compareTasks)
   const announce = (msg) => {
     if (!liveRegion) return
     liveRegion.textContent = ''
@@ -125,7 +130,8 @@
     const trimmed = text.trim()
     if (!trimmed) return
     const task = { id: uid(), text: trimmed, completed: false, createdAt: Date.now() }
-    tasks.unshift(task)
+    tasks.push(task)
+    sortTasks()
     save()
     render()
     announce(`Added task: ${trimmed}`)
@@ -136,6 +142,7 @@
     const t = tasks.find((x) => x.id === id)
     if (!t) return
     t.completed = !t.completed
+    sortTasks()
     save()
     render()
     announce(`${t.text} ${t.completed ? 'completed' : 'marked as incomplete'}`)
@@ -231,6 +238,7 @@
   // Initialize
   function init() {
     tasks = load() || []
+    sortTasks()
     currentFilter = localStorage.getItem(FILTER_KEY) || 'all'
     // wire filter buttons
     const btns = document.querySelectorAll('.filter-btn')
@@ -252,8 +260,6 @@
     announce(`Showing ${currentFilter === 'all' ? 'all tasks' : currentFilter === 'active' ? 'active tasks' : 'completed tasks'}`)
     render()
   }
-
-  //TODO add sorting
 
   init()
 })()
